@@ -2,230 +2,209 @@
 
 your coding autobiography, written by data.
 
-you know that feeling when you join a project and someone tells you "yeah don't touch that file, nobody knows why it works but it does"? memoir reads your git history and writes the story behind those files. the real story. not what the README claims. what the commits actually show.
+you know that feeling when you look at a repo and think "what the hell happened here?" memoir answers that. it reads your git history, finds the patterns nobody notices, and writes the actual story of your codebase.
 
-every repo has a personality. the 3am commits, the files that keep getting "fixed" every other week, the quiet periods where nobody touched anything. that's not random. that's a story. and nobody's reading it because git log is unreadable and nobody has time to dig through 2000 commits.
+the 3am commits. the file that's been "fixed" 14 times. the month where everyone just stopped committing. that's not random noise. that's a story. and nobody reads it because `git log` is a garbage way to tell stories.
 
-memoir digs for you.
+memoir reads it for you.
+
+---
 
 ## what it does
 
-it reads your entire git history, finds patterns you didn't know existed, and writes a narrative about your codebase. like a biography, but for code.
+it goes through your entire commit history, finds stuff you probably didn't realize was happening, and writes it out like a book about your repo. not a metrics report. a story.
 
-- **pattern detection** - finds recurring fixes, technical debt, burnout signals, learning curves, code ownership issues, anti-patterns, irregular work hours, and unstable code areas. not vibes. actual statistical patterns from your commit data.
-- **crisis forecasting** - predicts burnout, tech debt crisis, bus factor risk, maintainability decline, and project stagnation before they happen. based on trend extrapolation, not guessing.
-- **narrative generation** - turns data into readable chapters. like a book about your repo. with a prologue, pattern chapters, milestones, crisis reports, current state, and forecasts.
-- **health score** - one number, 0-100, that tells you how healthy your codebase actually is. based on patterns, forecasts, work patterns, and code quality metrics.
-- **export to anything** - markdown, json, html. the html export looks like a proper documentation site with dark mode and everything.
+- **8 pattern detectors** that find recurring fixes, tech debt piling up, burnout signals, learning curves, code ownership black holes, anti-patterns, weird work hours, and code that keeps getting rewritten for no reason
+- **5 crisis forecasters** that try to predict burnout, tech debt blowups, bus factor risk, code getting unmaintainable, and projects slowly dying
+- **narrative chapters** that read like a book, not a spreadsheet. prologue, pattern breakdowns, milestones, crisis reports, current state, forecasts
+- **health score** from 0 to 100. one number. tells you if your repo is healthy or on fire
+- **3 export formats** so you can read it however you want
 
 ## install
 
-```bash
+```
 pip install memoir
 ```
 
-or from source:
+or build from source:
 
-```bash
+```
 git clone https://github.com/arhanpratama5775-ux/memoir.git
 cd memoir
 pip install -e .
 ```
 
-## quick start
+## the 30 second version
 
-```bash
-# analyze your repo and generate a memoir
+```
 memoir scan
-
-# that's it. seriously.
 ```
 
-this will analyze the git repo in your current directory, detect patterns, forecast risks, generate narrative chapters, and export everything to `.memoir/exports/`.
+that's it. point it at a repo (defaults to current dir) and it does everything. analyzes history, finds patterns, predicts risks, writes the story, exports to `.memoir/exports/`.
 
 ## commands
 
-### scan - the main thing
+### scan
 
-```bash
-# basic scan of current directory
-memoir scan
+the big one. runs the full pipeline.
 
-# analyze a specific repo
-memoir scan --repo /path/to/repo
-
-# filter by author
-memoir scan --author "your name"
-
-# date range
-memoir scan --since 2024-01-01 --until 2024-12-31
-
-# export to multiple formats
-memoir scan -f markdown -f html -f json
-
-# force refresh (ignore cache)
-memoir scan --refresh
-
-# enable AI-enhanced narratives (needs API key, see config below)
-memoir scan --ai
+```
+memoir scan                              # current directory
+memoir scan --repo /path/to/project      # specific repo
+memoir scan --author "jane"              # filter by author
+memoir scan --since 2024-01-01           # date range
+memoir scan -f markdown -f html -f json  # multiple formats
+memoir scan --refresh                    # ignore cache, redo everything
+memoir scan --ai                         # AI-enhanced writing (needs API key)
 ```
 
-### patterns - what's hiding in your code
+### patterns
 
-```bash
+shows what patterns got detected. the stuff hiding in your code that you don't notice day to day.
+
+```
 memoir patterns
 ```
 
-shows all detected patterns in a table. you'll see things like:
+you'll see things like "payment/handler.py has been fixed 7 times in 4 months" or "after-hours commits went from 12% to 34%" or "one person owns 95% of the auth module." stuff that should probably worry you.
 
-- "payment/handler.py has been fixed 7 times across 4 months" (recurring fix)
-- "after-hours commits increased from 12% to 34% over the last quarter" (burnout signal)
-- "one author owns 95% of the auth module" (bus factor risk)
+### forecast
 
-### forecast - what's coming
+risk predictions with actual numbers. not vibes.
 
-```bash
+```
 memoir forecast
 ```
 
-shows risk forecasts with probabilities and timelines. like weather predictions but for your codebase. "67% chance of burnout in 6-8 weeks if current trend continues" kind of thing.
+"67% chance of burnout in 6-8 weeks if the current trend continues." that kind of thing. based on where your indicators are heading, not gut feelings.
 
-### health - quick check
+### health
 
-```bash
+quick pulse check. one number plus key stats.
+
+```
 memoir health
 ```
 
-compact dashboard. health score, top risks, key stats. good for a quick pulse check.
+### export
 
-### export - generate files
+generate files from cached data. run scan first.
 
-```bash
+```
 memoir export -f markdown -f html
 ```
 
-exports your cached memoir. run `scan` first.
+### status
 
-### status - what's cached
+what's cached, when it was last updated, how much disk it's using.
 
-```bash
+```
 memoir status
 ```
 
-shows what data is stored, when it was last updated, and how much space it takes.
+### config
 
-### config - settings
-
-```bash
-# see all config
-memoir config
-
-# set your AI API key for enhanced narratives
-memoir config ai_api_key sk-xxxx
-
-# set it globally (applies to all repos)
-memoir config --global ai_api_key sk-xxxx
-
-# change after-hours definition (default: 8pm-7am)
-memoir config after_hours_start 22
-memoir config after_hours_end 8
+```
+memoir config                              # see everything
+memoir config ai_api_key sk-xxxx           # set API key
+memoir config --global ai_api_key sk-xxxx  # set globally
+memoir config after_hours_start 22         # change what counts as "after hours"
 ```
 
-### reset - clean slate
+### reset
 
-```bash
+blows away all cached data. asks before doing it.
+
+```
 memoir reset
 ```
 
-deletes all cached data. asks for confirmation first.
+## the 8 detectors
 
-## how it works
-
-under the hood:
-
-1. **git analysis** - reads every commit, every file change, every message. extracts timing, patterns, code churn, author info, work schedules.
-2. **pattern detection** - 8 different detectors look for specific patterns. each one requires hard evidence (minimum 3-5 occurrences) and computes confidence scores. no vibes, no guessing.
-3. **crisis forecasting** - takes detected patterns and git trends, extrapolates them forward. computes probabilities based on how close indicators are to critical thresholds and how fast they're moving.
-4. **narrative generation** - templates turn data into readable chapters. every claim in the narrative is backed by a real data point. optionally, AI can enhance the prose (but the facts stay the same).
-5. **health scoring** - weighted combination of pattern severity, forecast risk levels, work pattern health, and code quality indicators. 100 = pristine, 0 = abandon hope.
-
-all data is stored locally in `.memoir/` inside your repo. no cloud, no server, no tracking. your git history stays on your machine.
-
-## the 8 pattern detectors
-
-| pattern | what it finds |
-|---------|--------------|
-| recurring fix | files/areas that keep getting fixed over and over |
-| technical debt | growing TODO/FIXME counts, churn without improvement |
-| burnout indicator | after-hours creep, message quality decline, burst-silence cycles |
-| learning curve | decreasing mistake frequency, improving practices |
-| code ownership | bus factor risk, single-author dominance |
-| anti-pattern | god objects, file coupling, accelerating complexity |
-| irregular hours | late nights increasing, weekends increasing, no rest days |
-| high churn | unstable code areas, constant rewrites without progress |
+| detector | what it catches |
+|---|---|
+| recurring fix | files that keep getting patched over and over |
+| technical debt | growing TODO/FIXME counts, churn with no improvement |
+| burnout indicator | after-hours creep, vague messages increasing, burst-silence cycles |
+| learning curve | mistakes going down over time, practices improving |
+| code ownership | bus factor risk, one person knowing too much |
+| anti-pattern | god objects, tight coupling, complexity accelerating |
+| irregular hours | late nights becoming normal, weekends becoming normal |
+| high churn | code that keeps getting rewritten without moving forward |
 
 ## the 5 forecasts
 
 | forecast | what it predicts |
-|----------|----------------|
-| burnout | when your work pattern is heading toward burnout |
-| tech debt crisis | when debt will become unmanageable |
-| bus factor | what happens if key people leave |
-| maintainability | when the codebase becomes too hard to maintain |
-| stagnation | when the project is slowly dying |
+|---|---|
+| burnout | is the work pattern heading toward a crash |
+| tech debt crisis | when does the debt become unmanageable |
+| bus factor | what happens if key people disappear |
+| maintainability | when does the codebase become too hard to work with |
+| stagnation | is the project slowly dying |
 
-## optional AI enhancement
+## AI enhancement (optional)
 
-by default, memoir uses templates to generate narratives. they're readable and data-accurate. but if you want prose that reads more like a novel and less like a report, you can enable AI enhancement.
+by default, memoir uses templates. they work fine. the facts are all there, the data is accurate.
 
-```bash
-# set your API key
-memoir config --global ai_api_key sk-your-key-here
+but if you want the writing to read more naturally, like an actual book instead of a filled-in form, you can plug in an AI model. it only touches the writing style. the data stays the same. if the API call fails, it falls back to templates silently. your memoir never depends on an external service.
 
-# or use environment variable
-export MEMOIR_AI_API_KEY=sk-your-key-here
+```
+memoir config ai_api_key sk-your-key
+memoir config ai_model gpt-4o-mini          # default
+memoir config ai_base_url https://...        # if you use a different provider
+```
 
-# scan with AI
+or just set the environment variable:
+
+```
+export MEMOIR_AI_API_KEY=sk-your-key
+```
+
+then scan with `--ai`:
+
+```
 memoir scan --ai
 ```
 
-supports any OpenAI-compatible API. set `ai_base_url` if you're using a different provider.
+works with any OpenAI-compatible API. set `ai_base_url` for non-OpenAI providers.
 
-the AI only enhances the writing style. all facts and data points come from the analysis. if the AI call fails, it silently falls back to templates. your memoir never depends on an API being up.
-
-## config options
+## config reference
 
 | key | default | what it does |
-|-----|---------|-------------|
-| `ai_api_key` | none | API key for AI-enhanced narratives |
-| `ai_model` | gpt-4o-mini | model to use |
-| `ai_base_url` | none | custom API endpoint |
-| `after_hours_start` | 20 | hour when "after hours" begins (8pm) |
-| `after_hours_end` | 7 | hour when "after hours" ends (7am) |
-| `min_pattern_occurrences` | 3 | minimum data points to count as a pattern |
+|---|---|---|
+| `ai_api_key` | not set | API key for enhanced narratives |
+| `ai_model` | gpt-4o-mini | which model to call |
+| `ai_base_url` | not set | custom endpoint |
+| `after_hours_start` | 20 | when "after hours" begins (8pm) |
+| `after_hours_end` | 7 | when "after hours" ends (7am) |
+| `min_pattern_occurrences` | 3 | minimum data points before calling something a pattern |
 | `forecast_confidence_threshold` | 0.3 | minimum confidence to issue a forecast |
-| `author_filter` | none | only analyze commits by this author |
-| `export_formats` | ["markdown"] | default export formats |
+| `author_filter` | not set | only look at commits from this author |
+| `export_formats` | ["markdown"] | default formats |
 
-## adding your own stuff
+## extending it
 
-want to add a custom pattern detector? or a new export format? the codebase is structured for extension:
+want to add your own detector or exporter? the codebase is built for it.
 
-- `memoir/core/pattern_detector.py` - add a new `detect_xxx()` method
-- `memoir/core/crisis_forecast.py` - add a new `forecast_xxx()` method
-- `memoir/exporters/` - add a new exporter class
-- `memoir/core/narrator.py` - add new chapter templates
+- new pattern detector: add a `detect_xxx()` method in `memoir/core/pattern_detector.py`, return a `Pattern` object with real evidence, and it gets picked up automatically
+- new forecast model: same deal in `memoir/core/crisis_forecast.py`, return a `Forecast` object
+- new export format: add a class in `memoir/exporters/`
+- new chapter template: add it in `memoir/core/narrator.py`
 
-each pattern detector and forecaster follows the same interface. return a `Pattern` or `Forecast` object with real evidence and the rest of the pipeline picks it up automatically.
+the interface is the same across all detectors and forecasters. return the right object type with actual data and the pipeline handles the rest.
 
-## philosophy
+## privacy
 
-every line of code you write is autobiography. but nobody reads git logs because they're formatted as receipts, not stories. memoir converts receipts into stories.
+everything stays local. all data is stored in `.memoir/` inside your repo. no cloud, no server, no telemetry, no tracking. your git history never leaves your machine.
 
-the patterns in your code aren't random. they're you. your habits, your fears, your learning, your exhaustion. all hiding in commit timestamps and file change frequencies. memoir makes the invisible visible.
+## why this exists
 
-the most honest thing about you isn't what you say in commit messages. it's when you commit, what you rewrite, and what you keep fixing. data doesn't have an ego. it doesn't care if you look smart or not. it just says: this is what you did. now read it.
+every line of code you write is autobiography. but git logs are formatted like receipts, not stories. nobody sits down and reads 2000 commit messages to understand what happened to a project.
+
+the patterns in your code aren't random. they're you. your habits, your stress, your learning, your weekends that turned into workdays. all sitting there in timestamps and file change counts. memoir just makes it legible.
+
+the honest thing about a developer isn't what they write in commit messages. it's when they commit, what they rewrite, and what they keep fixing. data doesn't care about looking smart. it just says: this is what happened. now you can read it.
 
 ## license
 
-MIT
+MIT. do whatever you want with it.
