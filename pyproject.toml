@@ -1,0 +1,59 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "memoir"
+version = "0.1.0"
+description = "Your coding autobiography, written by data. Analyzes git history to detect patterns, forecast burnout, and tell the story only your commits know."
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.9"
+authors = [
+    {name = "Titizzz"},
+]
+keywords = ["git", "developer-tools", "pattern-detection", "burnout", "autobiography", "cli"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Version Control :: Git",
+    "Topic :: Utilities",
+]
+dependencies = [
+    "click>=8.1",
+    "rich>=13.0",
+    "gitpython>=3.1",
+    "jinja2>=3.1",
+    "pyyaml>=6.0",
+    "python-dateutil>=2.8",
+]
+
+[project.optional-dependencies]
+ai = [
+    "openai>=1.0",
+]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+]
+
+[project.scripts]
+memoir = "memoir.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/arhanpratama5775-ux/memoir"
+Repository = "https://github.com/arhanpratama5775-ux/memoir"
+
+[tool.setuptools.packages.find]
+include = ["memoir*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
